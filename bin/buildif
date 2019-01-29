@@ -1,0 +1,71 @@
+#!/usr/bin/env node
+
+var fs = require("fs");
+var path = require("path");
+var minimist = require("minimist");
+var buildif = require("../index");
+
+/* Sets value inside object by pointer
+	var obj = {};
+	hainSet("a.b", 1, obj);
+	obj will be: { a: { b: 1 } }
+*/
+function chainSet(pointer, value, object) {
+	var splitted = pointer.split(".");
+	var root = object;
+	for (var i = 0; i < splitted.length - 1; i++) {
+		var key = splitted[i];
+		if (!root[key]) {
+			root[key] = {};
+		}
+		root = root[key];
+	}
+	var lastKey = splitted[splitted.length - 1];
+	root[lastKey] = value;
+}
+
+var argv = minimist(process.argv.slice(2));
+
+try {
+	var config = argv.config ? require(path.relative(__dirname, argv.config)) : {};
+} catch (err) {
+	console.error("Error: Can't load config file " + argv.config);
+	process.exit(1);
+}
+
+if (argv.input) {
+	try {
+		var text = fs.readFileSync(argv.input, "utf8");
+	} catch (err) {
+		console.error("Error: Can't read input file " + argv.input);
+		process.exit(1);
+	}
+} else {
+	try {
+		var text = fs.readFileSync("/dev/stdin", "utf8");
+	} catch (err) {
+		console.error("Error: Can't read input from stdin");
+		process.exit(1);
+	}
+}
+
+for (var key in argv) {
+	if (key !== "config" && key !== "input" && key !== "output") {
+		chainSet(key, argv[key], config);
+	}
+}
+
+try {
+	var result = buildif(text, config);
+} catch (err) {
+	console.error(text.split("\n")[err.lineNo - 1]);
+	console.error(err.toString());
+	console.error("    at <instrumented code> (" + argv.input + ":" + err.lineNo + ")");
+	process.exit(1);
+}
+
+if (argv.output) {
+	fs.writeFileSync(argv.output, result, "utf8");
+} else {
+	console.log(result);
+}

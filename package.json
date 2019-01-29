@@ -1,0 +1,11 @@
+{
+  "name": "buildif",
+  "version": "0.0.0",
+  "description": "Build preprocessor for Node that uses JS in predicates",
+  "main": "index.js",
+  "author": "Vladislav Kaminsky <wlodzislav@ya.ru>",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
+}
