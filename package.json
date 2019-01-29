@@ -1,7 +1,7 @@
 {
   "name": "buildif",
-  "version": "0.0.0",
-  "description": "Build preprocessor for Node that uses JS in predicates",
+  "version": "1.0",
+  "description": "Simple build preprocessor with real JS for logic",
   "main": "index.js",
   "author": "Vladislav Kaminsky <wlodzislav@ya.ru>",
   "license": "MIT",
