@@ -7,6 +7,11 @@ Useful for making separate builds for on-demand customers with different feature
 
 Source files could be any type, but it's primarily build for JS files.
 
+Install:
+
+	npm install buildif
+
+
 ## Syntax
 
 In code:
