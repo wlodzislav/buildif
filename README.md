@@ -3,7 +3,7 @@
 Builds different version of source depending on values in JSON/JS config.
 Could be used as a standalone CLI utility or as a library.
 
-Useful for making separate builds for on-demand customers with different features or customizations. Allows to keep single codebase without per-customer branches with the tradeoff of build comments and additional build step.
+Useful for making separate builds for on-premise customers with different features or customizations. Allows to keep single codebase without per-customer branches with the tradeoff of build comments and additional build step.
 
 Source files could be any type, but it's primarily build for JS files.
 
