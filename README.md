@@ -17,26 +17,26 @@ Install:
 In code:
 
 ```javascript
-	// BUILD: if (features.billing) {
-		console.log("Billing Enabled");
-	// BUILD: }
+// BUILD: if (features.billing) {
+	console.log("Billing Enabled");
+// BUILD: }
 
-	// BUILD: if(version.startsWith("1")) {
-		console.log("Version 1.x");
-	// BUILD: } else if (version.startsWith("2")) {
-		console.log("Version 2.x");
-	// BUILD: }
+// BUILD: if(version.startsWith("1")) {
+	console.log("Version 1.x");
+// BUILD: } else if (version.startsWith("2")) {
+	console.log("Version 2.x");
+// BUILD: }
 ```
 
 Config file:
 
 ```json
-	{
-		"features": {
-			"billing": false
-		},
-		"version": "2.1.1"
-	}
+{
+	"features": {
+		"billing": false
+	},
+	"version": "2.1.1"
+}
 ```
 
 Any line prefixed with `// BUILD:` will be executed at the build-time.
@@ -47,31 +47,31 @@ Any valid JS statements could be used after prefix: if/else, variable declaratio
 Use JSON config and output to stdout:
 
 ```bash
-	buildif --config ./examples/config.json --input ./examples/example.js > output.js
+buildif --config ./examples/config.json --input ./examples/example.js > output.js
 ```
 
 Use JS config and output to file:
 
 ```bash
-	buildif --config ./examples/config.js --input ./examples/example.js --output output.js
+buildif --config ./examples/config.js --input ./examples/example.js --output output.js
 ```
 
 Use pipes for both input and output:
 
 ```bash
-	cat ./examples/example.js | bin/buildif --config ./examples/config.json > output.js
+cat ./examples/example.js | bin/buildif --config ./examples/config.json > output.js
 ```
 
 Overwrite values from config with command line options:
 
 ```bash
-	buildif --config ./examples/config.json --features.billing=true --input ./examples/example.js
+buildif --config ./examples/config.json --features.billing=true --input ./examples/example.js
 ```
 
 Use only command line options without config file:
 
 ```bash
-	buildif --features.billing=true --version="2.1.0" --input ./examples/example.js
+buildif --features.billing=true --version="2.1.0" --input ./examples/example.js
 ```
 
 Command line overwrites could have multi-level names separated by dot, like "features.billing". For array indices also use dot, like "customers.1.name".
@@ -94,13 +94,13 @@ All other options are treated as config overwrites.
 When using CLI buildif will try to coerse types for options:
 
 ```bash
-	buildif --version=2.1 ...
+buildif --version=2.1 ...
 ```
 
 will result in config object `{ version: 2.1 }`, but
 
 ```bash
-	buildif --version=2.1.0 ...
+buildif --version=2.1.0 ...
 ```
 
 will result in config object `{ version: "2.1.0" }`.
@@ -112,15 +112,15 @@ will result in config object `{ version: "2.1.0" }`.
 Example:
 
 ```javascript
-	var buildif = require("buildif");
-	var text = require("fs").readFileSync("./examples/example.js");
-	var config = {
-		features: {
-			billing: false
-		},
-		version: "2.1.1"
-	};
+var buildif = require("buildif");
+var text = require("fs").readFileSync("./examples/example.js");
+var config = {
+	features: {
+		billing: false
+	},
+	version: "2.1.1"
+};
 
-	console.log(buildif(text, config));
+console.log(buildif(text, config));
 ```
 
