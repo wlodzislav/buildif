@@ -17,7 +17,5 @@ function buildif(text, config, _filePath) {
 
 };
 
-var text = require("fs").readFileSync("examples/example.js", "utf8");
-
 module.exports = buildif;
 
